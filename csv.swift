@@ -5,10 +5,10 @@
 
 import Foundation
 
-open class CSV {
-    open var headers: [String] = []
-    open var rows: [Dictionary<String, String>] = []
-    open var columns = Dictionary<String, [String]>()
+public class CSV {
+    public var headers: [String] = []
+    public var rows: [Dictionary<String, String>] = []
+    public var columns = Dictionary<String, [String]>()
     var delimiter = CharacterSet(charactersIn: ",")
     
     public init(content: String?, delimiter: CharacterSet, encoding: UInt) throws{
@@ -17,7 +17,7 @@ open class CSV {
 
             let newline = CharacterSet.newlines
             var lines: [String] = []
-            csvStringToParse.stringByTrimmingCharactersInSet(newline).enumerateLines { line, stop in lines.append(line) }
+            csvStringToParse.trimmingCharacters(in: newline).enumerateLines { line, stop in lines.append(line) }
 
             self.headers = self.parseHeaders(fromLines: lines)
             self.rows = self.parseRows(fromLines: lines)
@@ -38,7 +38,7 @@ open class CSV {
     
     
     func parseHeaders(fromLines lines: [String]) -> [String] {
-        return lines[0].componentsSeparatedByCharactersInSet(self.delimiter)
+        return lines[0].components(separatedBy: self.delimiter)
     }
     
     func parseRows(fromLines lines: [String]) -> [Dictionary<String, String>] {
@@ -50,7 +50,7 @@ open class CSV {
             }
             
             var row = Dictionary<String, String>()
-            let values = line.componentsSeparatedByCharactersInSet(self.delimiter)
+            let values = line.components(separatedBy: self.delimiter)
             for (index, header) in self.headers.enumerated() {
                 if index < values.count {
                     row[header] = values[index]

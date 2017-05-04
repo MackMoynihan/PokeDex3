@@ -1,0 +1,6 @@
+framework module Pods_Po_keDex {
+  umbrella header "Pods-PókeDex-umbrella.h"
+
+  export *
+  module * { export * }
+}
